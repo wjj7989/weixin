@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <RongIMKit/RongIMKit.h>
 @interface AppDelegate ()
 
 @end
@@ -16,7 +16,27 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    //    {"code":200,"userId":"114321","token":"c7Xqav8ln3kxTgWx9fxWXdOG33jjNaIvoiI2kMwK7Lqob0d5/WekUpbn/mrCljDMXnTKplH3Gfzmvz0xIOctiQ=="}
+    
+    [[RCIM sharedRCIM]initWithAppKey:@"3argexb6r965e"];
+    [[RCIM sharedRCIM]connectWithToken:@"lCnt5i11or3U1QJaRba9kNu7X4OzfwMtF8AeQqv0TCuXeG3n3qp+rvca1p+LX/nMAM/Ds7e1MahBMX8Z6eJwhQ=="
+                               success:^(NSString *userId)
+     {
+         NSLog(@"连接成功!");
+     }
+                                 error:^(RCConnectErrorCode status)
+     {
+         NSLog(@"连接失败!");
+     }
+                        tokenIncorrect:^()
+     {
+         NSLog(@"Token不正确!");
+     }];
+    
+    RCUserInfo *currentUser = [[RCUserInfo alloc]initWithUserId:@"114321" name:@"Halt" portrait:@"http://img5q.duitang.com/uploads/item/201506/29/20150629222217_mz5RF.jpeg"];
+    [RCIMClient sharedRCIMClient].currentUserInfo = currentUser;
+    
     return YES;
 }
 
